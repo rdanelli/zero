@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# SVN username and passwords
+USE="gdbrel"
+UPW="fikedWew"
+
+# SVN project
+PRJ=gong
+
+# test | prod #| dev
+TARGETENV=prod
+
+# This is the directory that will be created inside the $BASE directory (and it will be removed every time)
+TMPDIR=svn
+OUT=/opt/svn-project
+#rm -rf ${OUT} && mkdir -p ${OUT}
+
+#SVNBASE=http://bt-mil.atex.com/svn/gdb/branches/gong-1.0
+SVNBASE=http://bt-mil.atex.com/svn/gdb/branches/gong-2.6
+
+#svn --username ${USE} --password ${UPW} export ${SVNBASE}/${PRJ} ${OUT}
+#pushd ${OUT} && svn --username ${USE} --password ${UPW} up && popd
+DEST=/opt/data/dist-${TARGETENV}
+BKDATE=`date '+%Y%m%d-%H%M%S'`
+#DESTBK=${DEST}-`date '+%Y%m%d-%H%M%S'`
+DESTBK=${DEST}-${BKDATE}
+BKLOG=backup-${BKDATE}
+NEWDIST=/opt/svn-project/target/dist
+BINDIR=/opt/scripts
+
+STOP=${BINDIR}/stop_all.sh
+START=${BINDIR}/start_all.sh
+JBSTART=${BINDIR}/start_jboss.sh
+TCSTART=${BINDIR}/start_all_tomcat.sh
+
+JBDP=/opt/jboss/server/default/deploy/polopoly
+CFGDP=/opt/data/config
